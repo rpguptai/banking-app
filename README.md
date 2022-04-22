@@ -1,7 +1,7 @@
 # banking Account APIS
 This application is just a sample application for demonstrate spring boot APIs.
 
-##Assumptions and Points
+## Assumptions and Points
 
 ### Functional:
 
