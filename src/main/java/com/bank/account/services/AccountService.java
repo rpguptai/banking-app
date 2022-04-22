@@ -14,7 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.account.exception.ClientRequestException;
+import com.bank.account.exception.FunctionalException;
+import com.bank.account.exception.DataNotFoundException;
 import com.bank.account.model.Account;
+import com.bank.account.model.Card;
 import com.bank.account.model.Customer;
 import com.bank.account.model.Transaction;
 import com.bank.account.repositories.AccountRepository;
@@ -22,7 +25,6 @@ import com.bank.account.repositories.CardRepository;
 import com.bank.account.repositories.CustomerRepository;
 import com.bank.account.repositories.TransactionRepository;
 import com.bank.account.vo.AccountVO;
-import com.bank.account.vo.AuditTransactionVO;
 import com.bank.account.vo.TransferVO;
 import com.bank.account.vo.WithdrawVO;
 
@@ -81,15 +83,16 @@ public class AccountService {
 	@Transactional
 	public String withdrawMoney(WithdrawVO withdrawVO) {
 
-		/*
-		 * Optional<Card> card =
-		 * cardRepository.findByCardNumber(withdrawVO.getCardNo()); if
-		 * (!card.isPresent()) { return "card number " + withdrawVO.getCardNo() +
-		 * " does not exist"; }
-		 */
-		Optional<Account> account = accountRepository.findByAccountNo(withdrawVO.getAccountNo());
+		Optional<Card> card = cardRepository.findByCardNumber(withdrawVO.getCardNo()); 
+		if(!card.isPresent()) {
+			throw new ClientRequestException("card number " + withdrawVO.getCardNo() + " does not exist");
+		}
+		if(!withdrawVO.getCvv().equals(card.get().getCvv())) {
+			throw new DataNotFoundException("CVV for card number " + withdrawVO.getCardNo() + " is not valid");
+		}
+		Optional<Account> account = accountRepository.findByCard(card.get());
 		if (!account.isPresent()) {
-			return "Account number " + withdrawVO.getAccountNo() + " does not exist";
+			throw new ClientRequestException("No account associated with" + withdrawVO.getCardNo());
 		}
 
 		if (isAmountAvailable(withdrawVO.getAmount(), account.get().getCurrentBalance())) {
@@ -97,13 +100,13 @@ public class AccountService {
 
 			Transaction transaction = Transaction.builder().transactionType(Transaction.TransactionType.WITHDRAL)
 					.amount(withdrawVO.getAmount()).sourceAccount(account.get()).targetAccount(account.get())
-					.transactionDate(LocalDateTime.now()).reference(withdrawVO.getWithdrawType().toString()).build();
+					.transactionDate(LocalDateTime.now()).build();
 
 			accountRepository.save(account.get());
 			transactionRepository.save(transaction);
 
 		} else {
-			return "No Sufficient balance in account " + withdrawVO.getAccountNo();
+			throw new FunctionalException("No Sufficient balance " + withdrawVO.getCardNo());
 		}
 		return "Money Withdral Successful!!";
 	}

@@ -10,6 +10,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,35 +22,17 @@ import lombok.Setter;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
+@Builder
 public class WithdrawVO {
-	
-	public enum WithdrawType {
-		BANK("BANK"), ATM("ATM");
-		private final String type;
-		WithdrawType(final String type) {
-			this.type = type;
-		}
-		public String getType() {
-			return type;
-		}
-	}
 
 	@NotNull(message = "Please provide a vaild amount")
 	@DecimalMin("1.00")
 	private double amount;
-
-	@NotNull(message = "Please provide a vaild withdrawType")
-	private WithdrawType withdrawType;
 	
-	private String accountNo;
-	
+	@NotNull(message = "Please provide a card No")
 	private String cardNo;
 	
+	@NotNull(message = "Please provide cvv")
 	private Integer cvv;
-	
-	@AssertTrue(message="Please provide either Account no or Card details")
-    public boolean isValid(){
-        return (accountNo!=null || (cardNo!=null && cvv!=null ));
-    }
 
 }

@@ -28,14 +28,20 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new Response(clientRequestException.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(value = NoRecordFoundException.class)
-	public ResponseEntity<Response> handleNoDataFoundException(NoRecordFoundException noRecordFoundException) {
+	@ExceptionHandler(value = DataNotFoundException.class)
+	public ResponseEntity<Response> handleNoDataFoundException(DataNotFoundException noRecordFoundException) {
 		log.error(noRecordFoundException.getMessage());
-		return new ResponseEntity<>(new Response(noRecordFoundException.getMessage()), HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>(new Response(noRecordFoundException.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 	
-	@ExceptionHandler(value = TechnicalException.class)
-	public ResponseEntity<Response> handleGeneralException(TechnicalException exception) {
+	@ExceptionHandler(value = FunctionalException.class)
+	public ResponseEntity<Response> handleFunctionalException(FunctionalException exception) {
+		log.error(exception.getMessage());
+		return new ResponseEntity<>(new Response(exception.getMessage()), HttpStatus.OK);
+	}
+	
+	@ExceptionHandler(value = Exception.class)
+	public ResponseEntity<Response> handleGeneralException(Exception exception) {
 		log.error(exception.getMessage());
 		return new ResponseEntity<>(new Response("There is issue : "+exception.getMessage()+ " , Please contact application team"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}

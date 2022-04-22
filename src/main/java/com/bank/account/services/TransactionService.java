@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.account.exception.ClientRequestException;
-import com.bank.account.exception.NoRecordFoundException;
+import com.bank.account.exception.DataNotFoundException;
 import com.bank.account.model.Account;
 import com.bank.account.model.Transaction;
 import com.bank.account.repositories.AccountRepository;
@@ -68,7 +68,7 @@ public class TransactionService {
 		if (!auditTransactionVOList.isEmpty()) {
 			return auditTransactionVOList;
 		} else {
-			throw new NoRecordFoundException("NO transaction found for the account number "+accountNo);
+			throw new DataNotFoundException("NO transaction found for the account number "+accountNo);
 		}
 	}
 }

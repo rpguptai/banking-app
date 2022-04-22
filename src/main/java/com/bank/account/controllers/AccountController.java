@@ -39,7 +39,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @RestController
-@Api(tags = "API for Accounts")
+@Api(tags = "Rest API for Accounts")
 public class AccountController {
 	
 	@Autowired
@@ -48,29 +48,27 @@ public class AccountController {
 	@Autowired
 	TransactionService transactionService;
 	
-	@PostMapping(value = "/api/account/withdraw")
-	@ApiOperation(value = "Get Article by article ID")
+	@PostMapping(value = "/api/accounts/withdraw")
+	@ApiOperation(value = "End point to send withdraw money request")
 	public String withdrawMoney(@RequestBody @Valid WithdrawVO withdrawVO) {
-
 		return accountService.withdrawMoney(withdrawVO);
 	}
 
 	
-	@PutMapping(value = "/api/account/transfer")
-	@ApiOperation(value = "Get Article by article ID")
-	public String transferMoney(@RequestBody @Valid TransferVO transferVO) {
-		
+	@PutMapping(value = "/api/accounts/transfer")
+	@ApiOperation(value = "End point to transfer money from one account to another account")
+	public String transferMoney(@RequestBody @Valid TransferVO transferVO) {		
 		return accountService.transferMoney(transferVO);
 	}
 
-	@GetMapping(value = "/api/account/{customerId}")
-	@ApiOperation(value = "Get Inventory Details with article customerId")
-	public List<AccountVO> getInventory(@PathVariable String customerId) {
+	@GetMapping(value = "/api/accounts/{customerId}")
+	@ApiOperation(value = "Get all account with balance for one customer")
+	public List<AccountVO> getAllAccountForCustomer(@PathVariable String customerId) {
 		return accountService.getAllAccountBalanceForCustomer(customerId);
 	}
 	
-	@GetMapping(value = "/api/transaction/{accountNo}")
-	@ApiOperation(value = "Get Inventory Details with article customerId")
+	@GetMapping(value = "/api/transactions/{accountNo}")
+	@ApiOperation(value = "get all transactions for one account")
 	public List<AuditTransactionVO> getAllTransactionForAccount(@PathVariable String accountNo) {
 		return transactionService.getAllTransactionForAccount(accountNo);
 	}

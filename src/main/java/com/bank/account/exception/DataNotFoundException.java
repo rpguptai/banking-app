@@ -7,13 +7,13 @@ package com.bank.account.exception;
  * @author Ravi
  *
  */
-public class NoRecordFoundException extends RuntimeException {
+public class DataNotFoundException extends RuntimeException {
 
-	public NoRecordFoundException(String message) {
+	public DataNotFoundException(String message) {
 		super(message);
 	}
 
-	public NoRecordFoundException(String message, Throwable cause) {
+	public DataNotFoundException(String message, Throwable cause) {
 		super(message, cause);
 	}
 

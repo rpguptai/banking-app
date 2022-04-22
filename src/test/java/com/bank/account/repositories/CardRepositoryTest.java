@@ -34,7 +34,7 @@ public class CardRepositoryTest {
 
 		Card card2 = Card.builder().cardType(Card.CardType.CREDIT).cardNumber("8283788188614").cvv(345).build();
 		card2 = cardRepository.save(card2);
-		
+
 		Optional<Card> card3 = cardRepository.findById(card2.getId());
 		assertTrue(card3.isPresent());
 		assertEquals("8283788188614", card3.get().getCardNumber());
