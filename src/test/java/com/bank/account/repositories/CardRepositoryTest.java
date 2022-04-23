@@ -6,6 +6,7 @@ package com.bank.account.repositories;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -15,10 +16,6 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import com.bank.account.model.Card;
 
-/**
- * @author Ravi
- *
- */
 
 @DataJpaTest
 public class CardRepositoryTest {
@@ -44,7 +41,7 @@ public class CardRepositoryTest {
 	@Test
 	public void givenCard_whenSave_thenGetByCardNumber() {
 
-		Card card1 = Card.builder().cardType(Card.CardType.DEBIT).cardNumber("333333333333").cvv(345).build();
+		Card card1 = Card.builder().cardType(Card.CardType.DEBIT).cardNumber("333333333333").created(LocalDateTime.now()).cvv(345).build();
 		cardRepository.save(card1);
 
 		Optional<Card> card3 = cardRepository.findByCardNumber("333333333333");

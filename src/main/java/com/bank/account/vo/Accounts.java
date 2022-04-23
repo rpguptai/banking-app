@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.bank.account.vo;
 
 import java.util.List;
@@ -12,13 +9,12 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class AccountVO {	
-	private String customerNumber;
-	private List<Accounts> accounts;
+public class Accounts {	
+	private String accountNo;
+	private double currentBalance;
 }

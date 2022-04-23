@@ -33,10 +33,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author Ravi
- *
- */
+
 @Slf4j
 @RestController
 @Api(tags = "Rest API for Accounts")
@@ -63,7 +60,7 @@ public class AccountController {
 
 	@GetMapping(value = "/api/accounts/{customerId}")
 	@ApiOperation(value = "End Point to get all account with balance for one customer")
-	public List<AccountVO> getAllAccountForCustomer(@PathVariable String customerId) {
+	public AccountVO getAllAccountForCustomer(@PathVariable String customerId) {
 		return accountService.getAllAccountBalanceForCustomer(customerId);
 	}
 	

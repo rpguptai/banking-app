@@ -3,6 +3,7 @@
  */
 package com.bank.account.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -20,10 +21,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-/**
- * @author Ravi
- *
- */
+
 
 @Entity
 @Data
@@ -58,5 +56,7 @@ public class Card {
 	
 	@Column(name="card_cvv")
 	private int cvv;
+	
+	private LocalDateTime created;
 
 }

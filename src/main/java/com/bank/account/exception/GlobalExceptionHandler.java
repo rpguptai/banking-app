@@ -43,6 +43,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Response> handleGeneralException(Exception exception) {
 		log.error(exception.getMessage());
+		exception.printStackTrace();
 		return new ResponseEntity<>(new Response("There is issue : "+exception.getMessage()+ " , Please contact application team"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

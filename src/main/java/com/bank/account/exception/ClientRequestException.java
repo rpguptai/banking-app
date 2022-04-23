@@ -3,10 +3,7 @@
  */
 package com.bank.account.exception;
 
-/**
- * @author Ravi
- *
- */
+
 public class ClientRequestException extends RuntimeException {
 
 	public ClientRequestException(String message) {

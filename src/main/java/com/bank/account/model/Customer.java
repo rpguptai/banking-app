@@ -1,5 +1,6 @@
 package com.bank.account.model;
 
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 import javax.persistence.Column;
@@ -37,4 +38,6 @@ public class Customer {
 	
 	@Column(name="email_id")
 	private String email;
+	
+	private LocalDateTime created;
 }

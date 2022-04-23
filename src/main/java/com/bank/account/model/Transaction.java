@@ -26,37 +26,41 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Transaction {
-	
+
 	public enum TransactionType {
-		TRANSFER("TRANSFER"),WITHDRAL("WITHDRAL");
+		TRANSFER("TRANSFER"), WITHDRAL("WITHDRAL");
+
 		private final String type;
+
 		TransactionType(final String type) {
 			this.type = type;
 		}
+
 		public String getType() {
 			return type;
 		}
 	}
-	
+
 	@Id
-	@Type(type="uuid-char")
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@Type(type = "uuid-char")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private UUID id;
-	
+
 	@Enumerated(EnumType.STRING)
-	@Column(name="transaction_type")
+	@Column(name = "transaction_type")
 	private TransactionType transactionType;
-	
-	@Column(name="transaction_date")
+
+	@Column(name = "transaction_date")
 	private LocalDateTime transactionDate;
-	
+
 	private String reference;
 	private Double amount;
-	
+	private Double charges;
+
 	@ManyToOne
 	@JoinColumn(name = "source_account_id")
 	private Account sourceAccount;
-	
+
 	@ManyToOne
 	@JoinColumn(name = "target_account_id")
 	private Account targetAccount;

@@ -28,9 +28,9 @@ public class AccountControllerIntegrationTest {
 
 	@Test
 	public void givenCustomer_retrive_accounts_when_valid_Test(){
-		ResponseEntity<AccountVO[]> response = restTemplate.withBasicAuth("admin", "password").getForEntity("http://localhost:" + port + "/api/accounts/BANK22222", AccountVO[].class);
-		AccountVO[] AccountVOList = response.getBody();
-		assertEquals(3,AccountVOList.length);
+		ResponseEntity<AccountVO> response = restTemplate.withBasicAuth("admin", "password").getForEntity("http://localhost:" + port + "/api/accounts/BANK22222", AccountVO.class);
+		AccountVO accountVO = response.getBody();
+		assertEquals(3,accountVO.getAccounts().size());
 	}
 	
 	@Test
@@ -43,7 +43,7 @@ public class AccountControllerIntegrationTest {
 
 	@Test
 	public void givenAccounts_performTranfer_when_valid(){
-		TransferVO transferVO = TransferVO.builder().amount(50.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ONLINE).build();
+		TransferVO transferVO = TransferVO.builder().amount(50.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
 	    HttpHeaders headers = new HttpHeaders();
 	    HttpEntity<TransferVO> requestEntity = new HttpEntity<TransferVO>(transferVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.PUT,requestEntity,String.class);
@@ -53,7 +53,7 @@ public class AccountControllerIntegrationTest {
 	
 	@Test
 	public void givenAccounts_performTranfer_when_NoBalance(){
-		TransferVO transferVO = TransferVO.builder().amount(5000000.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ONLINE).build();
+		TransferVO transferVO = TransferVO.builder().amount(5000000.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
 	    HttpHeaders headers = new HttpHeaders();
 	    HttpEntity<TransferVO> requestEntity = new HttpEntity<TransferVO>(transferVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.PUT,requestEntity,String.class);
@@ -63,7 +63,7 @@ public class AccountControllerIntegrationTest {
 	
 	@Test
 	public void givenAccounts_performWithdraw_when_valid(){
-		WithdrawVO withdrawVO = WithdrawVO.builder().amount(500).cardNo("NL12345678").cvv(234).build();
+		WithdrawVO withdrawVO = WithdrawVO.builder().amount(500).cardNumber("NL12345678").cvv(234).withdrawType(WithdrawVO.WithdrawType.CARD).build();
 		 HttpHeaders headers = new HttpHeaders();
 		HttpEntity<WithdrawVO> requestEntity = new HttpEntity<WithdrawVO>(withdrawVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/withdraw", HttpMethod.POST,requestEntity,String.class);
@@ -73,11 +73,11 @@ public class AccountControllerIntegrationTest {
 	
 	@Test
 	public void givenAccounts_performWithdraw_when_no_balance(){
-		WithdrawVO withdrawVO = WithdrawVO.builder().amount(50000000).cardNo("NL12345678").cvv(234).build();
+		WithdrawVO withdrawVO = WithdrawVO.builder().amount(50000000).cardNumber("NL12345678").cvv(234).withdrawType(WithdrawVO.WithdrawType.CARD).build();
 		 HttpHeaders headers = new HttpHeaders();
 		HttpEntity<WithdrawVO> requestEntity = new HttpEntity<WithdrawVO>(withdrawVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/withdraw", HttpMethod.POST,requestEntity,String.class);
 		String responseString = response.getBody();
-		assertEquals("{\"message\":\"No Sufficient balance NL12345678\"}",responseString);
+		assertEquals("{\"message\":\"No Sufficient card limit NL12345678\"}",responseString);
 	}
 }
