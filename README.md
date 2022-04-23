@@ -19,7 +19,7 @@ This application is just a sample application for demonstrate spring boot APIs.
 
 ### ER diagram:
 
-![image](https://user-images.githubusercontent.com/55003223/164890874-ac71fedf-cabd-4f3e-9f2f-5375f6c2b420.png)
+![image](https://user-images.githubusercontent.com/55003223/164916711-0a821efc-36ba-4584-960f-01e92336d496.png)
 
 ### Swagger UI:
 
