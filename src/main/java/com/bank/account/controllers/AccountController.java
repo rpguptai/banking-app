@@ -62,13 +62,13 @@ public class AccountController {
 	}
 
 	@GetMapping(value = "/api/accounts/{customerId}")
-	@ApiOperation(value = "Get all account with balance for one customer")
+	@ApiOperation(value = "End Point to get all account with balance for one customer")
 	public List<AccountVO> getAllAccountForCustomer(@PathVariable String customerId) {
 		return accountService.getAllAccountBalanceForCustomer(customerId);
 	}
 	
 	@GetMapping(value = "/api/transactions/{accountNo}")
-	@ApiOperation(value = "get all transactions for one account")
+	@ApiOperation(value = "End Point to get all transactions for one account")
 	public List<AuditTransactionVO> getAllTransactionForAccount(@PathVariable String accountNo) {
 		return transactionService.getAllTransactionForAccount(accountNo);
 	}

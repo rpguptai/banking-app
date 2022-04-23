@@ -22,7 +22,7 @@ import com.bank.account.repositories.TransactionRepository;
 import com.bank.account.vo.AuditTransactionVO;
 
 /**
- * @author Ravi
+ * service class for transaction operations
  *
  */
 @Service
@@ -49,26 +49,26 @@ public class TransactionService {
 		List<AuditTransactionVO> auditTransactionVOList = new ArrayList<AuditTransactionVO>();
 		Optional<List<Transaction>> transactionSourceList = transactionRepository.findBySourceAccount(account.get());
 		if (transactionSourceList.isPresent() && !transactionSourceList.get().isEmpty()) {
-			auditTransactionVOList = transactionSourceList.get().stream()
+			auditTransactionVOList.addAll(transactionSourceList.get().stream()
 					.map(x -> new AuditTransactionVO(x.getTransactionType().toString(), x.getReference(),
 							x.getTransactionDate(), x.getAmount(), x.getSourceAccount().getAccountNo(),
 							x.getTargetAccount().getAccountNo()))
-					.collect(Collectors.toList());
+					.collect(Collectors.toList()));
 		}
 
 		Optional<List<Transaction>> transactionTargetList = transactionRepository.findByTargetAccount(account.get());
 		if (transactionTargetList.isPresent() && !transactionTargetList.get().isEmpty()) {
-			auditTransactionVOList = transactionTargetList.get().stream()
+			auditTransactionVOList.addAll(transactionTargetList.get().stream()
 					.map(x -> new AuditTransactionVO(x.getTransactionType().toString(), x.getReference(),
 							x.getTransactionDate(), x.getAmount(), x.getSourceAccount().getAccountNo(),
 							x.getTargetAccount().getAccountNo()))
-					.collect(Collectors.toList());
+					.collect(Collectors.toList()));
 		}
 
 		if (!auditTransactionVOList.isEmpty()) {
 			return auditTransactionVOList;
 		} else {
-			throw new DataNotFoundException("NO transaction found for the account number "+accountNo);
+			throw new DataNotFoundException("NO transaction found for the account number " + accountNo);
 		}
 	}
 }

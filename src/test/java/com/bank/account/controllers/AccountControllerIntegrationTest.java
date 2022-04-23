@@ -78,6 +78,6 @@ public class AccountControllerIntegrationTest {
 		HttpEntity<WithdrawVO> requestEntity = new HttpEntity<WithdrawVO>(withdrawVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/withdraw", HttpMethod.POST,requestEntity,String.class);
 		String responseString = response.getBody();
-		assertEquals("{message:No Sufficient balance NL12345678}",responseString);
+		assertEquals("{\"message\":\"No Sufficient balance NL12345678\"}",responseString);
 	}
 }

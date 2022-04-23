@@ -11,10 +11,6 @@ import org.springframework.stereotype.Repository;
 
 import com.bank.account.model.Card;
 
-/**
- * @author Ravi
- *
- */
 
 @Repository
 public interface CardRepository extends JpaRepository<Card, UUID> {

@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bank.account.exception.ClientRequestException;
-import com.bank.account.exception.FunctionalException;
 import com.bank.account.exception.DataNotFoundException;
+import com.bank.account.exception.FunctionalException;
 import com.bank.account.model.Account;
 import com.bank.account.model.Card;
 import com.bank.account.model.Customer;
@@ -29,7 +29,7 @@ import com.bank.account.vo.TransferVO;
 import com.bank.account.vo.WithdrawVO;
 
 /**
- * @author Ravi
+ * service class for account operations
  *
  */
 @Service
@@ -83,11 +83,11 @@ public class AccountService {
 	@Transactional
 	public String withdrawMoney(WithdrawVO withdrawVO) {
 
-		Optional<Card> card = cardRepository.findByCardNumber(withdrawVO.getCardNo()); 
-		if(!card.isPresent()) {
+		Optional<Card> card = cardRepository.findByCardNumber(withdrawVO.getCardNo());
+		if (!card.isPresent()) {
 			throw new ClientRequestException("card number " + withdrawVO.getCardNo() + " does not exist");
 		}
-		if(!withdrawVO.getCvv().equals(card.get().getCvv())) {
+		if (!withdrawVO.getCvv().equals(card.get().getCvv())) {
 			throw new DataNotFoundException("CVV for card number " + withdrawVO.getCardNo() + " is not valid");
 		}
 		Optional<Account> account = accountRepository.findByCard(card.get());

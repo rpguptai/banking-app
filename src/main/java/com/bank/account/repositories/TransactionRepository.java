@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.bank.account.model.Account;
-import com.bank.account.model.Customer;
 import com.bank.account.model.Transaction;
 
 @Repository

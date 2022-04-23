@@ -13,7 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @author Ravi
+ * Security configuration for local
  *
  */
 

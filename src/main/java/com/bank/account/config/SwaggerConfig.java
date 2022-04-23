@@ -16,7 +16,8 @@ import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
- * @author Ravi
+ * Configure for swagger
+ * swagger URL : http://localhost:8080/swagger-ui.html
  *
  */
 @Configuration

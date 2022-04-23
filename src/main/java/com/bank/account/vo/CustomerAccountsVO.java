@@ -10,10 +10,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Getter;
 import lombok.Setter;
 
-/**
- * @author Ravi
- *
- */
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
 @Setter
