@@ -18,10 +18,10 @@ This application is just a sample application for demonstrate spring boot APIs.
 
 ### Tools and Technology:
 
-API : Spring boot.
-Database: H2 in memory database.
-Coverage : JaCoCo.
-Vulnerability scan : OWASP Dependency Check.
+1. API : Spring boot.
+2. Database: H2 in memory database.
+3. Coverage : JaCoCo.
+4. Vulnerability scan : OWASP Dependency Check.
 
 ### ER diagram:
 
