@@ -7,7 +7,7 @@ This application is just a sample application for demonstrate spring boot APIs.
 
 1. An account does not have multiple joint owners.
 2. Money transfer can only be done in same bank.
-3. Each credit card is linked with credit account.
+3. Each credit card is linked with a credit account.
 3. I have implemented basic authentication but in practical application it should be done by tokens and Mutual TLS.
 
 ### Non-Functional:
@@ -30,4 +30,19 @@ This application is just a sample application for demonstrate spring boot APIs.
 
 ### Swagger UI:http://localhost:8080/swagger-ui.html
 
-![image](https://user-images.githubusercontent.com/55003223/164890918-f47b35b7-1c74-441e-b3e4-651f45902603.png)
+![image](https://user-images.githubusercontent.com/55003223/164967511-e4a68331-35c5-4f00-a73c-fc41377b1254.png)
+
+### Sample request:
+
+{
+  "amount": 45,
+  "sourceAccountNo": "NLBANK11223344",
+  "targetAccountNo": "NLBANK11223377",
+  "transferType": "ACCOUNT"
+}
+
+{
+  "accountNo": "NLBANK11223344",
+  "amount": 100,
+  "withdrawType": "ACCOUNT"
+}
