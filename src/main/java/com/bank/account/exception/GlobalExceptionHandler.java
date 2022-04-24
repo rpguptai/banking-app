@@ -14,10 +14,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 
-/**
- * @author Ravi
- *
- */
 @Slf4j
 @ControllerAdvice
 public class GlobalExceptionHandler {
@@ -43,7 +39,6 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(value = Exception.class)
 	public ResponseEntity<Response> handleGeneralException(Exception exception) {
 		log.error(exception.getMessage());
-		exception.printStackTrace();
 		return new ResponseEntity<>(new Response("There is issue : "+exception.getMessage()+ " , Please contact application team"), HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 

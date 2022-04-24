@@ -52,7 +52,7 @@ public class TransactionService {
 			auditTransactionVOList.addAll(transactionSourceList.get().stream()
 					.map(x -> new AuditTransactionVO(x.getTransactionType().toString(), x.getReference(),
 							x.getTransactionDate(), x.getAmount(), x.getSourceAccount().getAccountNo(),
-							x.getTargetAccount().getAccountNo()))
+							x.getTargetAccount()==null ? null:x.getTargetAccount().getAccountNo()))
 					.collect(Collectors.toList()));
 		}
 

@@ -57,7 +57,7 @@ public class CardPaymentServiceTest {
 			cardPaymentService.withdrawMoney(withdrawVO);
 		});
 
-		assertEquals("No Sufficient card limit NL12345678", thrown.getMessage());
+		assertEquals("No Sufficient money in card NL12345678", thrown.getMessage());
 	}
 
 	@Test

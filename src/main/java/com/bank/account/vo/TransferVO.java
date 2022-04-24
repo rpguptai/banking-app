@@ -51,13 +51,14 @@ public class TransferVO {
 	@JsonIgnore
 	@AssertTrue(message = "Please provide account or card details based on your transfer type")
 	public boolean isCardOrAccountPresent() {
-		return (transferType.toString().equals("CARD") && (cardNumber != null && cvv > 0))
-				|| (transferType.toString().equals("ACCOUNT") && (sourceAccountNo != null));
+		
+		return (transferType!=null && transferType.toString().equals("CARD") && (cardNumber != null && cvv > 0))
+				|| (transferType!=null && transferType.toString().equals("ACCOUNT") && (sourceAccountNo != null));
 	}
 	
 	@JsonIgnore
 	@AssertTrue(message = "source and target account numbers can not be same")
 	public boolean isSourceAndTargetSame() {
-		return !sourceAccountNo.equals(targetAccountNo);
+		return !(sourceAccountNo!=null && sourceAccountNo.equals(targetAccountNo));
 	}
 }

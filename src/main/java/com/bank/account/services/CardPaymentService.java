@@ -21,8 +21,8 @@ import com.bank.account.vo.WithdrawVO;
 
 @Service
 public class CardPaymentService {
-	
-	private static final double CREDIT_CHARGES=0.01;
+
+	private static final double CREDIT_CHARGES = 0.01;
 
 	@Autowired
 	TransactionRepository transactionRepository;
@@ -37,7 +37,7 @@ public class CardPaymentService {
 	CustomerRepository customerRepository;
 
 	public String transferMoney(TransferVO transferVO) {
-		
+
 		double extraCharge;
 		double totalAmount;
 
@@ -72,15 +72,16 @@ public class CardPaymentService {
 			Transaction transaction = Transaction.builder().transactionType(Transaction.TransactionType.TRANSFER)
 					.amount(transferVO.getAmount()).sourceAccount(sourceAccount.get())
 					.targetAccount(targetAccount.get()).transactionDate(LocalDateTime.now())
-					.reference(transferVO.getTransferType()+"card transfer with card number " + transferVO.getCardNumber()).charges(extraCharge)
-					.build();
+					.reference(
+							transferVO.getTransferType() + " transfer with card number " + transferVO.getCardNumber())
+					.charges(extraCharge).build();
 
 			accountRepository.save(sourceAccount.get());
 			accountRepository.save(targetAccount.get());
 			transactionRepository.save(transaction);
 
 		} else {
-			return "No Sufficient limit/balance in card " + transferVO.getCardNumber();
+			throw new FunctionalException("No Sufficient limit/balance in card " + transferVO.getCardNumber());
 		}
 		return "Money Transfer Successful!!";
 	}
@@ -112,19 +113,21 @@ public class CardPaymentService {
 			account.get().setCurrentBalance(account.get().getCurrentBalance() - totalAmount);
 
 			Transaction transaction = Transaction.builder().transactionType(Transaction.TransactionType.WITHDRAL)
-					.amount(totalAmount).sourceAccount(account.get()).targetAccount(account.get())
-					.transactionDate(LocalDateTime.now()).charges(extraCharge)
-					.reference(withdrawVO.getWithdrawType()+ " card transfer with card number "+withdrawVO.getCardNumber()+" EXTRA CHARGES FOR CREDIT CARD :" + extraCharge).build();
+					.amount(totalAmount).sourceAccount(account.get()).transactionDate(LocalDateTime.now())
+					.charges(extraCharge).reference(withdrawVO.getWithdrawType() + " transfer with card number "
+							+ withdrawVO.getCardNumber() + " EXTRA CHARGES FOR CREDIT CARD :" + extraCharge)
+					.build();
 
 			accountRepository.save(account.get());
 			transactionRepository.save(transaction);
 
 		} else {
-			throw new FunctionalException("No Sufficient card limit " + withdrawVO.getCardNumber());
+			throw new FunctionalException("No Sufficient money in card " + withdrawVO.getCardNumber());
 		}
 		return "Money Withdral Successful!!";
 
 	}
+
 	private boolean isAmountAvailable(double amount, double accountBalance) {
 		return (accountBalance - amount) > 0;
 	}

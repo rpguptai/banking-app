@@ -52,7 +52,7 @@ public class AccountController {
 	}
 
 	
-	@PutMapping(value = "/api/accounts/transfer")
+	@PostMapping(value = "/api/accounts/transfer")
 	@ApiOperation(value = "End point to transfer money from one account to another account")
 	public String transferMoney(@RequestBody @Valid TransferVO transferVO) {		
 		return accountService.transferMoney(transferVO);

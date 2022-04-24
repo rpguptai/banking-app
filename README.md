@@ -7,6 +7,7 @@ This application is just a sample application for demonstrate spring boot APIs.
 
 1. An account does not have multiple joint owners.
 2. Money transfer can only be done in same bank.
+3. Each credit card is linked with credit account.
 3. I have implemented basic authentication but in practical application it should be done by tokens and Mutual TLS.
 
 ### Non-Functional:
@@ -27,6 +28,6 @@ Vulnerability scan : OWASP Dependency Check.
 
 ![image](https://user-images.githubusercontent.com/55003223/164916711-0a821efc-36ba-4584-960f-01e92336d496.png)
 
-### Swagger UI:
+### Swagger UI:http://localhost:8080/swagger-ui.html
 
 ![image](https://user-images.githubusercontent.com/55003223/164890918-f47b35b7-1c74-441e-b3e4-651f45902603.png)

@@ -4,7 +4,7 @@
 package com.bank.account.exception;
 
 /**
- * @author Ravi
+ * Exception when data requested is not available
  *
  */
 public class DataNotFoundException extends RuntimeException {

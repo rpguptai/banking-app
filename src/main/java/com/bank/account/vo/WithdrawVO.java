@@ -42,9 +42,9 @@ public class WithdrawVO {
 	private WithdrawType withdrawType;
 
 	@JsonIgnore
-	@AssertTrue(message = "Please provide account or card details based on your transfer type")
+	@AssertTrue(message = "Please provide account or card details based on your withdraw type")
 	public boolean isCardOrAccountPresent() {
-		return (withdrawType.toString().equals("CARD") && (cardNumber != null && cvv > 0))
-				|| (withdrawType.toString().equals("ACCOUNT") && (accountNo != null));
+		return (withdrawType!=null && withdrawType.toString().equals("CARD") && (cardNumber != null && cvv > 0))
+				|| (withdrawType!=null && withdrawType.toString().equals("ACCOUNT") && (accountNo != null));
 	}
 }

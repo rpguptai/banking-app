@@ -42,7 +42,7 @@ public class AccountPaymentService {
 		}
 
 		if (sourceAccount.get().getAccountType().toString().equals("CREDIT")) {
-			throw new DataNotFoundException(
+			throw new ClientRequestException(
 					"you can not transfer money from credit account directly, please use your credit card");
 		}
 
@@ -66,7 +66,7 @@ public class AccountPaymentService {
 			accountRepository.save(targetAccount.get());
 			transactionRepository.save(transaction);
 		} else {
-			return "No Sufficient balance in account " + transferVO.getSourceAccountNo();
+			throw new FunctionalException("No Sufficient balance in account " + transferVO.getSourceAccountNo());
 		}
 		return "Money Transfer Successful!!";
 	}
@@ -77,16 +77,17 @@ public class AccountPaymentService {
 			throw new ClientRequestException("No account associated with" + withdrawVO.getCardNumber());
 		}
 		if (account.get().getAccountType().toString().equals("CREDIT")) {
-			throw new DataNotFoundException(
+			throw new ClientRequestException(
 					"you can not transfer money from credit account directly, please use your credit card");
 		}
 		if (isAmountAvailable(withdrawVO.getAmount(), account.get().getCurrentBalance())) {
 			account.get().setCurrentBalance(account.get().getCurrentBalance() - withdrawVO.getAmount());
 
 			Transaction transaction = Transaction.builder().transactionType(Transaction.TransactionType.WITHDRAL)
-					.amount(withdrawVO.getAmount()).sourceAccount(account.get()).targetAccount(account.get())
-					.transactionDate(LocalDateTime.now()).reference(withdrawVO.getWithdrawType().toString() + " with account number "
-							+ withdrawVO.getAccountNo()).charges(0.00).build();
+					.amount(withdrawVO.getAmount()).sourceAccount(account.get()).transactionDate(LocalDateTime.now())
+					.reference(withdrawVO.getWithdrawType().toString() + " with account number "
+							+ withdrawVO.getAccountNo())
+					.charges(0.00).build();
 
 			accountRepository.save(account.get());
 			transactionRepository.save(transaction);

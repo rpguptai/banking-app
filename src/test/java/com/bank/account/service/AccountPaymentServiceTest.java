@@ -46,7 +46,7 @@ public class AccountPaymentServiceTest {
 
 	@InjectMocks
 	AccountPaymentService accountPaymentService;
-	
+
 	@Spy
 	CardPaymentService cardPaymentService;
 
@@ -54,10 +54,11 @@ public class AccountPaymentServiceTest {
 	void givenAccounts_transferMoney_successfull() {
 		TransferVO transferVO = TransferVO.builder().amount(50.0).sourceAccountNo("NLBANK11223344")
 				.targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
-		when(accountRepository.findByAccountNo(transferVO.getSourceAccountNo())).thenReturn(
-				Optional.of(Account.builder().accountNo("NLBANK11223344").currentBalance(70000.00).accountType(AccountType.SAVING).build()));
-		when(accountRepository.findByAccountNo(transferVO.getTargetAccountNo()))
-				.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223388").currentBalance(50.00).accountType(AccountType.SAVING).build()));
+		when(accountRepository.findByAccountNo(transferVO.getSourceAccountNo()))
+				.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223344").currentBalance(70000.00)
+						.accountType(AccountType.SAVING).build()));
+		when(accountRepository.findByAccountNo(transferVO.getTargetAccountNo())).thenReturn(Optional.of(Account
+				.builder().accountNo("NLBANK11223388").currentBalance(50.00).accountType(AccountType.SAVING).build()));
 		when(accountRepository.save(any())).thenReturn(Account.builder().build());
 		when(transactionRepository.save(any())).thenReturn(Transaction.builder().build());
 		assertEquals("Money Transfer Successful!!", accountPaymentService.transferMoney(transferVO));
@@ -65,15 +66,20 @@ public class AccountPaymentServiceTest {
 
 	@Test
 	void givenAccounts_transferMoney_no_balance() {
-		TransferVO transferVO = TransferVO.builder().amount(5000000.0).sourceAccountNo("NLBANK11223344")
-				.targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
-		when(accountRepository.findByAccountNo(transferVO.getSourceAccountNo())).thenReturn(
-				Optional.of(Account.builder().accountNo("NLBANK11223344").currentBalance(70000.00).accountType(AccountType.SAVING).build()));
-		when(accountRepository.findByAccountNo(transferVO.getTargetAccountNo()))
-				.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223388").currentBalance(50.00).accountType(AccountType.SAVING).build()));
-		when(accountRepository.save(any())).thenReturn(Account.builder().build());
-		when(transactionRepository.save(any())).thenReturn(Transaction.builder().build());
-		assertEquals("No Sufficient balance in account NLBANK11223344", accountPaymentService.transferMoney(transferVO));
+		FunctionalException thrown = Assertions.assertThrows(FunctionalException.class, () -> {
+			TransferVO transferVO = TransferVO.builder().amount(5000000.0).sourceAccountNo("NLBANK11223344")
+					.targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
+			when(accountRepository.findByAccountNo(transferVO.getSourceAccountNo()))
+					.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223344").currentBalance(70000.00)
+							.accountType(AccountType.SAVING).build()));
+			when(accountRepository.findByAccountNo(transferVO.getTargetAccountNo()))
+					.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223388").currentBalance(50.00)
+							.accountType(AccountType.SAVING).build()));
+			when(accountRepository.save(any())).thenReturn(Account.builder().build());
+			when(transactionRepository.save(any())).thenReturn(Transaction.builder().build());
+			accountPaymentService.transferMoney(transferVO);
+		});
+		assertEquals("No Sufficient balance in account NLBANK11223344", thrown.getMessage());
 	}
 
 }

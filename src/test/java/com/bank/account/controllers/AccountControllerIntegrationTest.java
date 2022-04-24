@@ -46,7 +46,7 @@ public class AccountControllerIntegrationTest {
 		TransferVO transferVO = TransferVO.builder().amount(50.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
 	    HttpHeaders headers = new HttpHeaders();
 	    HttpEntity<TransferVO> requestEntity = new HttpEntity<TransferVO>(transferVO, headers);	    
-		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.PUT,requestEntity,String.class);
+		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.POST,requestEntity,String.class);
 		String responseString = response.getBody();
 		assertEquals("Money Transfer Successful!!",responseString);
 	}
@@ -56,9 +56,9 @@ public class AccountControllerIntegrationTest {
 		TransferVO transferVO = TransferVO.builder().amount(5000000.0).sourceAccountNo("NLBANK11223344").targetAccountNo("NLBANK11223388").transferType(TransferVO.TransferType.ACCOUNT).build();
 	    HttpHeaders headers = new HttpHeaders();
 	    HttpEntity<TransferVO> requestEntity = new HttpEntity<TransferVO>(transferVO, headers);	    
-		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.PUT,requestEntity,String.class);
+		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/transfer", HttpMethod.POST,requestEntity,String.class);
 		String responseString = response.getBody();
-		assertEquals("No Sufficient balance in account NLBANK11223344",responseString);
+		assertEquals("{\"message\":\"No Sufficient balance in account NLBANK11223344\"}",responseString);
 	}
 	
 	@Test
@@ -78,6 +78,6 @@ public class AccountControllerIntegrationTest {
 		HttpEntity<WithdrawVO> requestEntity = new HttpEntity<WithdrawVO>(withdrawVO, headers);	    
 		ResponseEntity<String> response = restTemplate.withBasicAuth("admin", "password").exchange("http://localhost:" + port + "/api/accounts/withdraw", HttpMethod.POST,requestEntity,String.class);
 		String responseString = response.getBody();
-		assertEquals("{\"message\":\"No Sufficient card limit NL12345678\"}",responseString);
+		assertEquals("{\"message\":\"No Sufficient money in card NL12345678\"}",responseString);
 	}
 }
