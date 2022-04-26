@@ -15,9 +15,7 @@ import lombok.Setter;
 
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
-@Setter
 @AllArgsConstructor
-@NoArgsConstructor
 public class AuditTransactionVO {	
 	private String transactionType;		
 	private String reference;

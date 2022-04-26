@@ -17,6 +17,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension;
 import com.bank.account.exception.FunctionalException;
 import com.bank.account.model.Account;
 import com.bank.account.model.Account.AccountType;
+import com.bank.account.model.Card.CardType;
 import com.bank.account.model.Card;
 import com.bank.account.model.Transaction;
 import com.bank.account.repositories.AccountRepository;
@@ -80,6 +81,17 @@ public class AccountPaymentServiceTest {
 			accountPaymentService.transferMoney(transferVO);
 		});
 		assertEquals("No Sufficient balance in account NLBANK11223344", thrown.getMessage());
+	}
+
+	@Test
+	void givenAccount_withdrawMoney_Successful() {
+		WithdrawVO withdrawVO = WithdrawVO.builder().amount(500).accountNo("NLBANK11223388")
+				.withdrawType(WithdrawVO.WithdrawType.ACCOUNT).build();
+		when(accountRepository.findByAccountNo("NLBANK11223388"))
+				.thenReturn(Optional.of(Account.builder().accountNo("NLBANK11223388").accountType(AccountType.SAVING).currentBalance(5000.00).build()));
+		when(accountRepository.save(any())).thenReturn(Account.builder().build());
+		when(transactionRepository.save(any())).thenReturn(Transaction.builder().build());
+		assertEquals("Money Withdral Successful!!", accountPaymentService.withdrawMoney(withdrawVO));
 	}
 
 }
