@@ -11,12 +11,34 @@ import com.bank.account.model.Account;
 import com.bank.account.model.Card;
 import com.bank.account.model.Customer;
 
+
+/**
+ * The Repository AccountRepository.
+ */
 @Repository
 public interface AccountRepository  extends JpaRepository<Account, UUID> {
 
+	/**
+	 * Find by account no.
+	 *
+	 * @param accountNo the account no
+	 * @return the optional
+	 */
 	Optional<Account> findByAccountNo(String accountNo);
 	
+	/**
+	 * Find by customer.
+	 *
+	 * @param customer the customer
+	 * @return the optional
+	 */
 	Optional<List<Account>> findByCustomer(Customer customer);
 	
+	/**
+	 * Find by card.
+	 *
+	 * @param card the card
+	 * @return the optional
+	 */
 	Optional<Account> findByCard(Card card);
 }

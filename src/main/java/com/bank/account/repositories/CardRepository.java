@@ -12,7 +12,18 @@ import org.springframework.stereotype.Repository;
 import com.bank.account.model.Card;
 
 
+
+/**
+ * The Repository CardRepository.
+ */
 @Repository
 public interface CardRepository extends JpaRepository<Card, UUID> {
+	
+	/**
+	 * Find by card number.
+	 *
+	 * @param cardNo the card no
+	 * @return the optional
+	 */
 	Optional<Card> findByCardNumber(String cardNo);
 }

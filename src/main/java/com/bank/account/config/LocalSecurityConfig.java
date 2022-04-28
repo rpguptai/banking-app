@@ -13,6 +13,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
+ *
  * Security configuration for local
  *
  */
@@ -24,6 +25,11 @@ public class LocalSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 
+	/**
+	 *
+	 * @param http
+	 * @throws Exception
+	 */
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
@@ -37,6 +43,11 @@ public class LocalSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.headers().frameOptions().disable();
 	}
 
+	/**
+	 *
+	 * @param auth
+	 * @throws Exception
+	 */
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 		auth.inMemoryAuthentication().passwordEncoder(passwordEncoder).withUser("admin")

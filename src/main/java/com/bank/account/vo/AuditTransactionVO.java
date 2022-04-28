@@ -9,18 +9,41 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-
+/**
+ * The Class AuditTransactionVO.
+ */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Getter
+
+/**
+ * Instantiates a new audit transaction VO.
+ *
+ * @param transactionType the transaction type
+ * @param reference       the reference
+ * @param transactionDate the transaction date
+ * @param amount          the amount
+ * @param sourceAccount   the source account
+ * @param targetAccount   the target account
+ */
 @AllArgsConstructor
-public class AuditTransactionVO {	
-	private String transactionType;		
+public class AuditTransactionVO {
+
+	/** The transaction type. */
+	private String transactionType;
+
+	/** The reference. */
 	private String reference;
-	private LocalDateTime transactionDate;	
-	private Double amount;	
+
+	/** The transaction date. */
+	private LocalDateTime transactionDate;
+
+	/** The amount. */
+	private Double amount;
+
+	/** The source account. */
 	private String sourceAccount;
+
+	/** The target account. */
 	private String targetAccount;
 }

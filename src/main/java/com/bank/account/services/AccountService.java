@@ -24,25 +24,35 @@ import com.bank.account.vo.Accounts;
 import com.bank.account.vo.TransferVO;
 import com.bank.account.vo.WithdrawVO;
 
+
 /**
- * service class for account operations
- *
+ * service class for account operations.
  */
 @Service
 public class AccountService {
 
+	/** The account payment service. */
 	@Autowired
 	AccountPaymentService accountPaymentService;
 
+	/** The card payment service. */
 	@Autowired
 	CardPaymentService cardPaymentService;
 
+	/** The account repository. */
 	@Autowired
 	AccountRepository accountRepository;
 
+	/** The customer repository. */
 	@Autowired
 	CustomerRepository customerRepository;
 
+	/**
+	 * Transfer money.
+	 *
+	 * @param transferVO the transfer VO
+	 * @return the string
+	 */
 	@Transactional
 	public String transferMoney(TransferVO transferVO) {
 
@@ -56,6 +66,12 @@ public class AccountService {
 
 	}
 
+	/**
+	 * Withdraw money.
+	 *
+	 * @param withdrawVO the withdraw VO
+	 * @return the string
+	 */
 	@Transactional
 	public String withdrawMoney(WithdrawVO withdrawVO) {
 
@@ -68,6 +84,12 @@ public class AccountService {
 		}
 	}
 
+	/**
+	 * Gets the all account balance for customer.
+	 *
+	 * @param customerNo the customer no
+	 * @return the all account balance for customer
+	 */
 	public AccountVO getAllAccountBalanceForCustomer(String customerNo) {
 		Optional<Customer> customer = customerRepository.findByCustomerNo(customerNo);
 		if (!customer.isPresent()) {

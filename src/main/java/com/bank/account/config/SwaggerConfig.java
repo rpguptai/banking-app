@@ -15,15 +15,21 @@ import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
+// TODO: Auto-generated Javadoc
 /**
  * Configure for swagger
  * swagger URL : http://localhost:8080/swagger-ui.html
- *
  */
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
-	
+
+
+	/**
+	 * Api.
+	 *
+	 * @return the docket
+	 */
 	@Bean
 	public Docket api() {
 		return new Docket(DocumentationType.SWAGGER_2).select()
@@ -31,6 +37,11 @@ public class SwaggerConfig {
 				.apiInfo(getApiInfo());
 	}
 
+	/**
+	 * Gets the api info.
+	 *
+	 * @return the api info
+	 */
 	private ApiInfo getApiInfo() {
 		return new ApiInfoBuilder().title("Swagger UI for Banking Account").version("1.0").description("This is light weight banking account APIs")
 				.contact(new Contact("Ravi Gupta", "http://www.ravipgupta.com", "rpgupta.nl@gmail.com"))

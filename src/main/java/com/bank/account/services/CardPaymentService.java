@@ -19,23 +19,38 @@ import com.bank.account.repositories.TransactionRepository;
 import com.bank.account.vo.TransferVO;
 import com.bank.account.vo.WithdrawVO;
 
+
+/**
+ * The Class CardPaymentService.
+ */
 @Service
 public class CardPaymentService {
 
+	/** The Constant CREDIT_CHARGES. */
 	private static final double CREDIT_CHARGES = 0.01;
 
+	/** The transaction repository. */
 	@Autowired
 	TransactionRepository transactionRepository;
 
+	/** The account repository. */
 	@Autowired
 	AccountRepository accountRepository;
 
+	/** The card repository. */
 	@Autowired
 	CardRepository cardRepository;
 
+	/** The customer repository. */
 	@Autowired
 	CustomerRepository customerRepository;
 
+	/**
+	 * Transfer money.
+	 *
+	 * @param transferVO the transfer VO
+	 * @return the string
+	 */
 	public String transferMoney(TransferVO transferVO) {
 
 		double extraCharge;
@@ -86,6 +101,12 @@ public class CardPaymentService {
 		return "Money Transfer Successful!!";
 	}
 
+	/**
+	 * Withdraw money.
+	 *
+	 * @param withdrawVO the withdraw VO
+	 * @return the string
+	 */
 	public String withdrawMoney(WithdrawVO withdrawVO) {
 		double extraCharge;
 		double totalAmount;
@@ -128,6 +149,13 @@ public class CardPaymentService {
 
 	}
 
+	/**
+	 * Checks if is amount available.
+	 *
+	 * @param amount the amount
+	 * @param accountBalance the account balance
+	 * @return true, if is amount available
+	 */
 	private boolean isAmountAvailable(double amount, double accountBalance) {
 		return (accountBalance - amount) > 0;
 	}

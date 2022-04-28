@@ -21,25 +21,35 @@ import com.bank.account.repositories.CustomerRepository;
 import com.bank.account.repositories.TransactionRepository;
 import com.bank.account.vo.AuditTransactionVO;
 
+
 /**
- * service class for transaction operations
- *
+ * service class for transaction operations.
  */
 @Service
 public class TransactionService {
 
+	/** The transaction repository. */
 	@Autowired
 	TransactionRepository transactionRepository;
 
+	/** The account repository. */
 	@Autowired
 	AccountRepository accountRepository;
 
+	/** The card repository. */
 	@Autowired
 	CardRepository cardRepository;
 
+	/** The customer repository. */
 	@Autowired
 	CustomerRepository customerRepository;
 
+	/**
+	 * Gets the all transaction for account.
+	 *
+	 * @param accountNo the account no
+	 * @return the all transaction for account
+	 */
 	public List<AuditTransactionVO> getAllTransactionForAccount(String accountNo) {
 		Optional<Account> account = accountRepository.findByAccountNo(accountNo);
 		if (!account.isPresent()) {

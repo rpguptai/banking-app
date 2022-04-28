@@ -8,9 +8,19 @@ import org.springframework.stereotype.Repository;
 
 import com.bank.account.model.Customer;
 
+
+/**
+ * The Repository CustomerRepository.
+ */
 @Repository
 public interface CustomerRepository extends JpaRepository<Customer, UUID> {
 	
+	/**
+	 * Find by customer no.
+	 *
+	 * @param cardNo the card no
+	 * @return the optional
+	 */
 	Optional<Customer> findByCustomerNo(String cardNo);
 
 }
